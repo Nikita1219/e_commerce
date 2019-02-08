@@ -1,0 +1,271 @@
+﻿create table contacts2
+    -> (contact_id int not null primary key,
+    -> last_name varchar(10),
+    -> website1 varchar(20),
+    -> website2 varchar(20));
+
+ insert into contacts2(contact_id,last_name,website1,website2)values
+    -> (1,'johnson','techonthenet.com',''),
+    -> (2,'anderson','',''),
+    -> (3,'smith','TBD','TBD'),
+    -> (4,'jackson','checkyourmath.com','digminecraft.com');
+
+
+create table contacts
+(contact_id int(11) not null auto_increment,
+last_name varchar(30) not null,
+first_name varchar(25),
+birthday date,
+created_date date,
+created_by varchar(30),
+constraint contacts_pk primary key(contact_id)
+);
+
+
+create table suppliers
+ (supplier_id int(11) not null auto_increment,
+ supplier_name varchar(30) not null,
+ account_rep varchar(30) not null default 'TBD',
+ constraint suppliers_pk primary key(supplier_id)
+ );
+
+
+mysql> select * from contacts2 where last_name = 'johnson';
++------------+-----------+------------------+----------+
+| contact_id | last_name | website1         | website2 |
++------------+-----------+------------------+----------+
+|          1 | johnson   | techonthenet.com |          |
++------------+-----------+------------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select * from contacts2 where website1=website2;
++------------+-----------+----------+----------+
+| contact_id | last_name | website1 | website2 |
++------------+-----------+----------+----------+
+|          2 | anderson  |          |          |
+|          3 | smith     | TBD      | TBD      |
++------------+-----------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from contacts2 where website1<=>website2;
++------------+-----------+----------+----------+
+| contact_id | last_name | website1 | website2 |
++------------+-----------+----------+----------+
+|          2 | anderson  |          |          |
+|          3 | smith     | TBD      | TBD      |
++------------+-----------+----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select * from contacts2 where last_name <> 'johnson';
++------------+-----------+-------------------+------------------+
+| contact_id | last_name | website1          | website2         |
++------------+-----------+-------------------+------------------+
+|          2 | anderson  |                   |                  |
+|          3 | smith     | TBD               | TBD              |
+|          4 | jackson   | checkyourmath.com | digminecraft.com |
++------------+-----------+-------------------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from contacts2 where last_name != 'johnson';
++------------+-----------+-------------------+------------------+
+| contact_id | last_name | website1          | website2         |
++------------+-----------+-------------------+------------------+
+|          2 | anderson  |                   |                  |
+|          3 | smith     | TBD               | TBD              |
+|          4 | jackson   | checkyourmath.com | digminecraft.com |
++------------+-----------+-------------------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from contacts2 where contact_id>3;
++------------+-----------+-------------------+------------------+
+| contact_id | last_name | website1          | website2         |
++------------+-----------+-------------------+------------------+
+|          4 | jackson   | checkyourmath.com | digminecraft.com |
++------------+-----------+-------------------+------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from contacts2 where contact_id>3;
++------------+-----------+-------------------+------------------+
+| contact_id | last_name | website1          | website2         |
++------------+-----------+-------------------+------------------+
+|          4 | jackson   | checkyourmath.com | digminecraft.com |
++------------+-----------+-------------------+------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from contacts2 where last_name in ('johnson','anderson','smith');
++------------+-----------+------------------+----------+
+| contact_id | last_name | website1         | website2 |
++------------+-----------+------------------+----------+
+|          1 | johnson   | techonthenet.com |          |
+|          2 | anderson  |                  |          |
+|          3 | smith     | TBD              | TBD      |
++------------+-----------+------------------+----------+
+3 rows in set (0.01 sec)
+
+mysql> select * from contacts2 where last_name = 'johnson' or last_name='anderson' or last_name='smith';
++------------+-----------+------------------+----------+
+| contact_id | last_name | website1         | website2 |
++------------+-----------+------------------+----------+
+|          1 | johnson   | techonthenet.com |          |
+|          2 | anderson  |                  |          |
+|          3 | smith     | TBD              | TBD      |
++------------+-----------+------------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from contacts2 where contact_id in(2,4);
++------------+-----------+-------------------+------------------+
+| contact_id | last_name | website1          | website2         |
++------------+-----------+-------------------+------------------+
+|          2 | anderson  |                   |                  |
+|          4 | jackson   | checkyourmath.com | digminecraft.com |
++------------+-----------+-------------------+------------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from contacts2 where last_name not in('johnson','anderson','smith');
++------------+-----------+-------------------+------------------+
+| contact_id | last_name | website1          | website2         |
++------------+-----------+-------------------+------------------+
+|          4 | jackson   | checkyourmath.com | digminecraft.com |
++------------+-----------+-------------------+------------------+
+1 row in set (0.00 sec)
+
+select * from contacts2 where last_name is null;
+Empty set (0.00 sec)
+
+mysql> select * from contacts2 where last_name is not null;
++------------+-----------+-------------------+------------------+
+| contact_id | last_name | website1          | website2         |
++------------+-----------+-------------------+------------------+
+|          1 | johnson   | techonthenet.com  |                  |
+|          2 | anderson  |                   |                  |
+|          3 | smith     | TBD               | TBD              |
+|          4 | jackson   | checkyourmath.com | digminecraft.com |
++------------+-----------+-------------------+------------------+
+4 rows in set (0.00 sec)
+
+mysql> update contacts2 set last_name='TBD' where last_name is null;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> update contacts2 set last_name='TBD' where last_name is not null;
+Query OK, 4 rows affected (0.03 sec)
+Rows matched: 4  Changed: 4  Warnings: 0
+
+mysql> delete from contacts2 where last_name is null;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delete from contacts2 where last_name is not null;
+Query OK, 4 rows affected (0.01 sec)
+select * from members where category like 'A%';
++--------+--------------------------+------------+
+| tab_id | title                    | category   |
++--------+--------------------------+------------+
+|      1 | creed                    | animations |
+|      2 | real stell               | animations |
+|      3 | alvin and chipmunks      | animations |
+|      4 | the adventure of tin tin | animations |
+|      5 | safe                     | action     |
+|      6 | safe house               | action     |
++--------+--------------------------+------------+
+
+ select * from movies where first_name like '___';
+Empty set (0.00 sec)
+
+mysql> select * from members where category like '__A%';
++--------+----------+----------+
+| tab_id | title    | category |
++--------+----------+----------+
+|      7 | 3 idiots | drama    |
+|      8 | ghazni   | drama    |
+|      9 | nayak    | drama    |
++--------+----------+----------+
+
+
+
+view
+
+
+mysql> create view my_v1 as  select * from peoplr;
+ERROR 1146 (42S02): Table 'shop.peoplr' doesn't exist
+mysql> create view my_v1 as  select * from people;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select * from my_v1;
++----+--------+------+
+| id | name   | age  |
++----+--------+------+
+|  1 | nisha  |   34 |
+|  2 | neha   |   23 |
+|  3 | kanika |   25 |
+|  4 | niki   |   19 |
+|  5 | priya  |   19 |
+|  6 | frani  |   66 |
++----+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> create view my_v2 as select * from people where name like 'J%';
+Query OK, 0 rows affected (0.03 sec)
+
+
+mysql> create view my_v1 as  select * from peoplr;
+ERROR 1146 (42S02): Table 'shop.peoplr' doesn't exist
+mysql> create view my_v1 as  select * from people;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> select * from my_v1;
++----+--------+------+
+| id | name   | age  |
++----+--------+------+
+|  1 | nisha  |   34 |
+|  2 | neha   |   23 |
+|  3 | kanika |   25 |
+|  4 | niki   |   19 |
+|  5 | priya  |   19 |
+|  6 | frani  |   66 |
++----+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> create view my_v2 as select * from people where name like 'J%';
+Query OK, 0 rows affected (0.03 sec)
+
+alter view my_v2 as select * from people where name like 'n%';
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from my_v2;
++----+-------+------+
+| id | name  | age  |
++----+-------+------+
+|  1 | nisha |   34 |
+|  2 | neha  |   23 |
+|  4 | niki  |   19 |
++----+-------+------+
+3 rows in set (0.00 sec)
+
+insert into my_v2 values('jay');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into my_v2 values (7,'ishani',7);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> select * from people;
++----+--------+------+
+| id | name   | age  |
++----+--------+------+
+|  1 | nisha  |   34 |
+|  2 | neha   |   23 |
+|  3 | kanika |   25 |
+|  4 | niki   |   19 |
+|  5 | priya  |   19 |
+|  6 | frani  |   66 |
+|  8 | ishani |    7 |
+|  9 | jay    | NULL |
++----+--------+------+
+8 rows in set (0.00 sec)
+
+mysql> select * from My_v2;
++-------+
+| name  |
++-------+
+| nisha |
+| neha  |
+| niki  |
++-------+
