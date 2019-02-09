@@ -1,0 +1,733 @@
+excercise 
+
+create table tourneys
+    -> (name varchar(30),
+    -> wins real,
+    -> best real,
+    -> size real);
+
+nsert into tourneys(name,wins,best,size)
+    -> values('dolly','7','245','8.5'),
+    -> ('etta','4','283','9'),
+    -> ('irma','9','266','7'),
+    -> ('barbara','2','197','7.5'),
+    -> ('gladys','13','273','8'));
+
+select * from tourneys;
++---------+------+------+------+
+| name    | wins | best | size |
++---------+------+------+------+
+| dolly   |    7 |  245 |  8.5 |
+| etta    |    4 |  283 |    9 |
+| irma    |    9 |  266 |    7 |
+| barbara |    2 |  197 |  7.5 |
+| gladys  |   13 |  273 |    8 |
++---------+------+------+------+
+
+
+ create table dinners
+    -> (name varchar(30),
+    -> birthdate date,
+    -> entree varchar(30),
+    -> side varchar(30),
+    -> dessert varchar(30));
+
+insert into dinners(name ,birthdate,entree,side,dessert)
+    -> values('dolly','1946-01-19','steak','salad','cake'),
+    -> ('etta','1938-01-25','chicken','fries','ice cream'),
+    -> ('irma','1941-02-18','tofu','fries','cake'),
+    -> ('barbara','1948-12-25','tofu','salad','ice cream'),
+    -> ('gladys','1944-05-28','steak','fries','ice cream');
+
+mysql> select * from dinners;
++---------+------------+---------+-------+-----------+
+| name    | birthdate  | entree  | side  | dessert   |
++---------+------------+---------+-------+-----------+
+| dolly   | 1946-01-19 | steak   | salad | cake      |
+| etta    | 1938-01-25 | chicken | fries | ice cream |
+| irma    | 1941-02-18 | tofu    | fries | cake      |
+| barbara | 1948-12-25 | tofu    | salad | ice cream |
+| gladys  | 1944-05-28 | steak   | fries | ice cream |
++---------+------------+---------+-------+-----------+
+
+select name from dinners;
++---------+
+| name    |
++---------+
+| dolly   |
+| etta    |
+| irma    |
+| barbara |
+| gladys  |
++---------+
+
+ select name,birthdate from dinners;
++---------+------------+
+| name    | birthdate  |
++---------+------------+
+| dolly   | 1946-01-19 |
+| etta    | 1938-01-25 |
+| irma    | 1941-02-18 |
+| barbara | 1948-12-25 |
+| gladys  | 1944-05-28 |
++---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from tourneys;
++---------+------+------+------+
+| name    | wins | best | size |
++---------+------+------+------+
+| dolly   |    7 |  245 |  8.5 |
+| etta    |    4 |  283 |    9 |
+| irma    |    9 |  266 |    7 |
+| barbara |    2 |  197 |  7.5 |
+| gladys  |   13 |  273 |    8 |
++---------+------+------+------+
+5 rows in set (0.00 sec)
+
+mysql> select size from tourneys where name ='irma';
++------+
+| size |
++------+
+|    7 |
++------+
+1 row in set (0.00 sec)
+
+select entree from dinners  where entree like 't%';
++--------+
+| entree |
++--------+
+| tofu   |
+| tofu   |
++--------+
+2 rows in set (0.00 sec)
+
+
+mysql> select entree from dinners  where (entree like 't%')and side='fries';
++--------+
+| entree |
++--------+
+| tofu   |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select name as n, birthdate as b, dessert as d from dinners;
++---------+------------+-----------+
+| n       | b          | d         |
++---------+------------+-----------+
+| dolly   | 1946-01-19 | cake      |
+| etta    | 1938-01-25 | ice cream |
+| irma    | 1941-02-18 | cake      |
+| barbara | 1948-12-25 | ice cream |
+| gladys  | 1944-05-28 | ice cream |
++---------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> select count(entree) from dinners where entree='tofu';
++---------------+
+| count(entree) |
++---------------+
+|             2 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(best) from tourneys;
++-----------+
+| avg(best) |
++-----------+
+|     252.8 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(wins)from tourneys;
++-----------+
+| sum(wins) |
++-----------+
+|        35 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select sum(entree) from dinners;
++-------------+
+| sum(entree) |
++-------------+
+|           0 |
++-------------+
+1 row in set, 5 warnings (0.00 sec)
+
+mysql> select min(wins) from tourneys;
++-----------+
+| min(wins) |
++-----------+
+|         2 |
++-----------+
+1 row in set (0.01 sec)
+
+mysql> select max(wins) from tourneys;
++-----------+
+| max(wins) |
++-----------+
+|        13 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select min(name) from dinners;
++-----------+
+| min(name) |
++-----------+
+| barbara   |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select max(name) from dinners;
++-----------+
+| max(name) |
++-----------+
+| irma      |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select count(name), entree from dinners group by entree;
++-------------+---------+
+| count(name) | entree  |
++-------------+---------+
+|           1 | chicken |
+|           2 | steak   |
+|           2 | tofu    |
++-------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select name,birthdate from dinners order by birthdate;
++---------+------------+
+| name    | birthdate  |
++---------+------------+
+| etta    | 1938-01-25 |
+| irma    | 1941-02-18 |
+| gladys  | 1944-05-28 |
+| dolly   | 1946-01-19 |
+| barbara | 1948-12-25 |
++---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select name,birthdate from dinners order by birthdate desc;
++---------+------------+
+| name    | birthdate  |
++---------+------------+
+| barbara | 1948-12-25 |
+| dolly   | 1946-01-19 |
+| gladys  | 1944-05-28 |
+| irma    | 1941-02-18 |
+| etta    | 1938-01-25 |
++---------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select count(name) side from dinners group by side having count(name)>=3;
++------+
+| side |
++------+
+|    3 |
++------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> select count(name), side from dinners group by side having count(name)>=3;
++-------------+-------+
+| count(name) | side  |
++-------------+-------+
+|           3 | fries |
++-------------+-------+
+1 row in set (0.00 sec)
+
+select tourneys.name,tourneys.size,dinners.birthdate
+    -> from tourneys
+    -> join dinners on tourneys.name=dinners.name;
++---------+------+------------+
+| name    | size | birthdate  |
++---------+------+------------+
+| dolly   |  8.5 | 1946-01-19 |
+| etta    |    9 | 1938-01-25 |
+| irma    |    7 | 1941-02-18 |
+| barbara |  7.5 | 1948-12-25 |
+| gladys  |    8 | 1944-05-28 |
++---------+------+------------+
+
+insert into tourneys(name,wins,best,size)
+    -> values('bettye','0','193','9');
+Query OK, 1 row affected (0.02 sec)
+
+ insert into dinners(name,birthdate,entree,side,dessert)
+    -> values('lesley','1946-05-02','steak','salad','ice cream');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select tourneys.name,tourneys.size,dinners.birthdate from tourneys
+    -> join dinners on tourneys.name=dinners.name;
++---------+------+------------+
+| name    | size | birthdate  |
++---------+------+------------+
+| dolly   |  8.5 | 1946-01-19 |
+| etta    |    9 | 1938-01-25 |
+| irma    |    7 | 1941-02-18 |
+| barbara |  7.5 | 1948-12-25 |
+| gladys  |    8 | 1944-05-28 |
++---------+------+------------+
+
+ select tourneys.name,tourneys.size,dinners.birthdate from tourneys
+    -> left join dinners on tourneys.name=dinners.name;
++---------+------+------------+
+| name    | size | birthdate  |
++---------+------+------------+
+| dolly   |  8.5 | 1946-01-19 |
+| etta    |    9 | 1938-01-25 |
+| irma    |    7 | 1941-02-18 |
+| barbara |  7.5 | 1948-12-25 |
+| gladys  |    8 | 1944-05-28 |
+| bettye  |    9 | NULL       |
++---------+------+------------+
+6 rows in set (0.01 sec)
+
+mysql> select tourneys.name,tourneys.size,dinners.birthdate from tourneys
+    -> right join dinners on tourneys.name=dinners.name;
++---------+------+------------+
+| name    | size | birthdate  |
++---------+------+------------+
+| dolly   |  8.5 | 1946-01-19 |
+| etta    |    9 | 1938-01-25 |
+| irma    |    7 | 1941-02-18 |
+| barbara |  7.5 | 1948-12-25 |
+| gladys  |    8 | 1944-05-28 |
+| NULL    | NULL | 1946-05-02 |
++---------+------+------------+
+
+select name from tourneys union select name from dinners;
++---------+
+| name    |
++---------+
+| dolly   |
+| etta    |
+| irma    |
+| barbara |
+| gladys  |
+| bettye  |
+| lesley  |
++---------+
+7 rows in set (0.00 sec)
+
+mysql> select name from tourneys union all select name from dinners;
++---------+
+| name    |
++---------+
+| dolly   |
+| etta    |
+| irma    |
+| barbara |
+| gladys  |
+| bettye  |
+| dolly   |
+| etta    |
+| irma    |
+| barbara |
+| gladys  |
+| lesley  |
++---------+
+
+ select wins from tourneys where name='barbara');
++--------+------+
+| name   | wins |
++--------+------+
+| dolly  |    7 |
+| etta   |    4 |
+| irma   |    9 |
+| gladys |   13 |
++--------+------+
+4 rows in set (0.00 sec)
+
+mysql> select name,size from tourneys as t
+    -> where wins >(
+    -> select avg(wins) from tourneys where size = t.size
+    -> );
++------+------+
+| name | size |
++------+------+
+| etta |    9 |
++------+------+
+1 row in set (0.00 sec)
+
+mysql> select avg(wins) from tourneys where size = t.size);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> select avg(wins) from tourneys where size = t.size;
+ERROR 1054 (42S22): Unknown column 't.size' in 'where clause'
+mysql> select avg(wins) from tourneys where size = tourneys.size;
++-------------------+
+| avg(wins)         |
++-------------------+
+| 5.833333333333333 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> select name,size from tourneys as t where wins;
++---------+------+
+| name    | size |
++---------+------+
+| dolly   |  8.5 |
+| etta    |    9 |
+| irma    |    7 |
+| barbara |  7.5 |
+| gladys  |    8 |
++---------+------+
+
+create table if not exists products(
+    -> productID int signed not null auto_increment,
+    -> productCode char(3) not null default '',
+    -> name varchar(30) not null default '',
+    -> quantity int signed not null default 0,
+    -> price decimal(7,2) not null default 99999.99,
+    -> primary key (productID)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+desc products;
++-------------+--------------+------+-----+----------+----------------+
+| Field       | Type         | Null | Key | Default  | Extra          |
++-------------+--------------+------+-----+----------+----------------+
+| productID   | int(11)      | NO   | PRI | NULL     | auto_increment |
+| productCode | char(3)      | NO   |     |          |                |
+| name        | varchar(30)  | NO   |     |          |                |
+| quantity    | int(11)      | NO   |     | 0        |                |
+| price       | decimal(7,2) | NO   |     | 99999.99 |                |
++-------------+--------------+------+-----+----------+----------------+
+5 rows in set (0.02 sec)
+
+mysql> show create table products \g
++----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table    | Create Table                                                                                                                                                                                                                                                                                                                      |
++----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| products | CREATE TABLE `products` (
+  `productID` int(11) NOT NULL AUTO_INCREMENT,
+  `productCode` char(3) NOT NULL DEFAULT '',
+  `name` varchar(30) NOT NULL DEFAULT '',
+  `quantity` int(11) NOT NULL DEFAULT '0',
+  `price` decimal(7,2) NOT NULL DEFAULT '99999.99',
+  PRIMARY KEY (`productID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 |
++----------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+insert into products values(1001,'pen','pen red',5000,1.23);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into products values('pec','pencil 2h','10000,0.48),
+    '> ('pec','pencil 2h',8000,0.49);
+    '> ;
+    '> ';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'pec','pencil 2h',8000,0.49);
+;
+'' at line 1
+mysql> insert into products values('pec','pencil 2h',10000,0.48),
+    -> ('pec','pencil 2h',8000,0.49);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into products(productCode,name,quantity,price) values('pec','pencil 2h',10000,0.48),
+    -> ('pec','pencil 2h',8000,0.49);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into products(productCode,name,quantity,price) values('pec','pencil hb');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into products(productCode,name) values('pec','pencil hb');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into products values (null,null,null,null,null);
+ERROR 1048 (23000): Column 'productCode' cannot be null
+mysql> select * from products;
++-----------+-------------+-----------+----------+----------+
+| productID | productCode | name      | quantity | price    |
++-----------+-------------+-----------+----------+----------+
+|         1 | pen         | pen blue  |     8000 |     1.25 |
+|         2 | pen         | pen black |     2000 |     1.25 |
+|      1001 | pen         | pen red   |     5000 |     1.23 |
+|      1002 | pec         | pencil 2h |    10000 |     0.48 |
+|      1003 | pec         | pencil 2h |     8000 |     0.49 |
+|      1004 | pec         | pencil hb |        0 | 99999.99 |
++-----------+-------------+-----------+----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> delete from products where productID=1006;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from products;
++-----------+-------------+-----------+----------+----------+
+| productID | productCode | name      | quantity | price    |
++-----------+-------------+-----------+----------+----------+
+|         1 | pen         | pen blue  |     8000 |     1.25 |
+|         2 | pen         | pen black |     2000 |     1.25 |
+|      1001 | pen         | pen red   |     5000 |     1.23 |
+|      1002 | pec         | pencil 2h |    10000 |     0.48 |
+|      1003 | pec         | pencil 2h |     8000 |     0.49 |
+|      1004 | pec         | pencil hb |        0 | 99999.99 |
++-----------+-------------+-----------+----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select sysdate;
+ERROR 1054 (42S22): Unknown column 'sysdate' in 'field list'
+mysql> select sysdate();
++---------------------+
+| sysdate()           |
++---------------------+
+| 2019-02-09 01:02:37 |
++---------------------+
+1 row in set (0.02 sec)
+
+mysql> select 1+1;
++-----+
+| 1+1 |
++-----+
+|   2 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select 5+7 as 'result;
+    '> select 5+7 as 'result';
+    '> ';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'result';
+'' at line 1
+mysql> select 5+7 as 'result';
++--------+
+| result |
++--------+
+|     12 |
++--------+
+1 row in set (0.00 sec)
+
+mysql> select name,price from products where price <1.0;
++-----------+-------+
+| name      | price |
++-----------+-------+
+| pencil 2h |  0.48 |
+| pencil 2h |  0.49 |
++-----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select name,price from products where quantity<=2000;
++-----------+----------+
+| name      | price    |
++-----------+----------+
+| pen black |     1.25 |
+| pencil hb | 99999.99 |
++-----------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select name , price from products where productCode='pen';
++-----------+-------+
+| name      | price |
++-----------+-------+
+| pen blue  |  1.25 |
+| pen black |  1.25 |
+| pen red   |  1.23 |
++-----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select name , price from products where name like 'pencil%';
++-----------+----------+
+| name      | price    |
++-----------+----------+
+| pencil 2h |     0.48 |
+| pencil 2h |     0.49 |
+| pencil hb | 99999.99 |
++-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select name , price from products where name like 'p__%';
++-----------+----------+
+| name      | price    |
++-----------+----------+
+| pen blue  |     1.25 |
+| pen black |     1.25 |
+| pen red   |     1.23 |
+| pencil 2h |     0.48 |
+| pencil 2h |     0.49 |
+| pencil hb | 99999.99 |
++-----------+----------+
+6 rows in set (0.00 sec)
+
+ select * from products where quantity>=2000 and name like 'pen%';
++-----------+-------------+-----------+----------+-------+
+| productID | productCode | name      | quantity | price |
++-----------+-------------+-----------+----------+-------+
+|         1 | pen         | pen blue  |     8000 |  1.25 |
+|         2 | pen         | pen black |     2000 |  1.25 |
+|      1001 | pen         | pen red   |     5000 |  1.23 |
+|      1002 | pec         | pencil 2h |    10000 |  0.48 |
+|      1003 | pec         | pencil 2h |     8000 |  0.49 |
++-----------+-------------+-----------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products where quantity>=2000 and price<1.24 and name like 'pen%';
++-----------+-------------+-----------+----------+-------+
+| productID | productCode | name      | quantity | price |
++-----------+-------------+-----------+----------+-------+
+|      1001 | pen         | pen red   |     5000 |  1.23 |
+|      1002 | pec         | pencil 2h |    10000 |  0.48 |
+|      1003 | pec         | pencil 2h |     8000 |  0.49 |
++-----------+-------------+-----------+----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from products where not (quantity>=2000 and name like 'pen%');
++-----------+-------------+-----------+----------+----------+
+| productID | productCode | name      | quantity | price    |
++-----------+-------------+-----------+----------+----------+
+|      1004 | pec         | pencil hb |        0 | 99999.99 |
++-----------+-------------+-----------+----------+----------+
+1 row in set (0.00 sec)
+
+select * from products where name in ('pen red','pen black');
++-----------+-------------+-----------+----------+-------+
+| productID | productCode | name      | quantity | price |
++-----------+-------------+-----------+----------+-------+
+|         2 | pen         | pen black |     2000 |  1.25 |
+|      1001 | pen         | pen red   |     5000 |  1.23 |
++-----------+-------------+-----------+----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from products where
+    -> (price between 1.0 and 2.0) and (quantity between 1000 and 2000);
++-----------+-------------+-----------+----------+-------+
+| productID | productCode | name      | quantity | price |
++-----------+-------------+-----------+----------+-------+
+|         2 | pen         | pen black |     2000 |  1.25 |
++-----------+-------------+-----------+----------+-------+
+1 row in set (0.00 sec)
+
+mysql> select * from products where productCode is null;
+Empty set (0.00 sec)
+
+mysql> select * from products where productCode = null;
+Empty set (0.00 sec)
+
+select * from products where name like 'pen%' order by price desc;
++-----------+-------------+-----------+----------+----------+
+| productID | productCode | name      | quantity | price    |
++-----------+-------------+-----------+----------+----------+
+|      1004 | pec         | pencil hb |        0 | 99999.99 |
+|         1 | pen         | pen blue  |     8000 |     1.25 |
+|         2 | pen         | pen black |     2000 |     1.25 |
+|      1001 | pen         | pen red   |     5000 |     1.23 |
+|      1003 | pec         | pencil 2h |     8000 |     0.49 |
+|      1002 | pec         | pencil 2h |    10000 |     0.48 |
++-----------+-------------+-----------+----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from products where name like 'pen%' order by price desc, quqntity;
+ERROR 1054 (42S22): Unknown column 'quqntity' in 'order clause'
+mysql> select * from products where name like 'pen%' order by price desc, quantity;
++-----------+-------------+-----------+----------+----------+
+| productID | productCode | name      | quantity | price    |
++-----------+-------------+-----------+----------+----------+
+|      1004 | pec         | pencil hb |        0 | 99999.99 |
+|         2 | pen         | pen black |     2000 |     1.25 |
+|         1 | pen         | pen blue  |     8000 |     1.25 |
+|      1001 | pen         | pen red   |     5000 |     1.23 |
+|      1003 | pec         | pencil 2h |     8000 |     0.49 |
+|      1002 | pec         | pencil 2h |    10000 |     0.48 |
++-----------+-------------+-----------+----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from products order by rand();
++-----------+-------------+-----------+----------+----------+
+| productID | productCode | name      | quantity | price    |
++-----------+-------------+-----------+----------+----------+
+|      1003 | pec         | pencil 2h |     8000 |     0.49 |
+|         2 | pen         | pen black |     2000 |     1.25 |
+|      1001 | pen         | pen red   |     5000 |     1.23 |
+|      1002 | pec         | pencil 2h |    10000 |     0.48 |
+|         1 | pen         | pen blue  |     8000 |     1.25 |
+|      1004 | pec         | pencil hb |        0 | 99999.99 |
++-----------+-------------+-----------+----------+----------+
+6 rows in set (0.03 sec)
+
+mysql> select * from products order by price limit 2;
++-----------+-------------+-----------+----------+-------+
+| productID | productCode | name      | quantity | price |
++-----------+-------------+-----------+----------+-------+
+|      1002 | pec         | pencil 2h |    10000 |  0.48 |
+|      1003 | pec         | pencil 2h |     8000 |  0.49 |
++-----------+-------------+-----------+----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from products order by price limit 2,1;\
++-----------+-------------+---------+----------+-------+
+| productID | productCode | name    | quantity | price |
++-----------+-------------+---------+----------+-------+
+|      1001 | pen         | pen red |     5000 |  1.23 |
++-----------+-------------+---------+----------+-------+
+1 row in set (0.00 sec)
+
+select productID as ID,productCode as code,
+    -> name as description, price as 'unit price'
+    -> from products
+    -> order by ID;
++------+------+-------------+------------+
+| ID   | code | description | unit price |
++------+------+-------------+------------+
+|    1 | pen  | pen blue    |       1.25 |
+|    2 | pen  | pen black   |       1.25 |
+| 1001 | pen  | pen red     |       1.23 |
+| 1002 | pec  | pencil 2h   |       0.48 |
+| 1003 | pec  | pencil 2h   |       0.49 |
+| 1004 | pec  | pencil hb   |   99999.99 |
++------+------+-------------+------------+
+6 rows in set (0.00 sec)
+
+select concat(productCode, ' - ' , name) as 'product_description', price from products;
++---------------------+----------+
+| product_description | price    |
++---------------------+----------+
+| pen - pen blue      |     1.25 |
+| pen - pen black     |     1.25 |
+| pen - pen red       |     1.23 |
+| pec - pencil 2h     |     0.48 |
+| pec - pencil 2h     |     0.49 |
+| pec - pencil hb     | 99999.99 |
++---------------------+----------+
+6 rows in set (0.00 sec)
+
+select distinct price as distinct_price from products;
++----------------+
+| distinct_price |
++----------------+
+|           1.25 |
+|           1.23 |
+|           0.48 |
+|           0.49 |
+|       99999.99 |
++----------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from products group by productCode;
++-----------+-------------+-----------+----------+-------+
+| productID | productCode | name      | quantity | price |
++-----------+-------------+-----------+----------+-------+
+|      1002 | pec         | pencil 2h |    10000 |  0.48 |
+|         1 | pen         | pen blue  |     8000 |  1.25 |
++-----------+-------------+-----------+----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select productCode, count(*) as count
+    -> from products
+    -> group by productCode
+    -> order by count desc;
++-------------+-------+
+| productCode | count |
++-------------+-------+
+| pen         |     3 |
+| pec         |     3 |
++-------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select max(price),min(price),avg(price),std(price),sum(quantity)
+    -> from products;
++------------+------------+--------------+--------------+---------------+
+| max(price) | min(price) | avg(price)   | std(price)   | sum(quantity) |
++------------+------------+--------------+--------------+---------------+
+|   99999.99 |       0.48 | 16667.448333 | 37267.445582 |         33000 |
++------------+------------+--------------+--------------+---------------+
+1 row in set (0.00 sec)
+
+
